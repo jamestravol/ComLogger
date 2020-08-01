@@ -14,5 +14,12 @@ public class MainPanel extends JTabbedPane {
         if (!Main.licensed) {
             add("Activation", new ActivationPanel());
         }
+
+        if (Main.block) {
+            this.setEnabledAt(0, false);
+            this.setEnabledAt(1, false);
+            this.setSelectedIndex(2);
+        }
+
     }
 }

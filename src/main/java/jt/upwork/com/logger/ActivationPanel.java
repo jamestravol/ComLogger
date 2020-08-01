@@ -39,6 +39,10 @@ public class ActivationPanel extends JPanel {
                 Files.write(path, serialField.getText().getBytes());
                 JOptionPane.showMessageDialog(null, "Activated", "Activated",
                         JOptionPane.INFORMATION_MESSAGE);
+                if (this.getParent() instanceof JTabbedPane) {
+                    ((JTabbedPane) this.getParent()).setEnabledAt(0, true);
+                    ((JTabbedPane) this.getParent()).setEnabledAt(1, true);
+                }
                 this.getParent().remove(this);
             } else {
                 JOptionPane.showMessageDialog(null, "Wrong serial number", "Warning",

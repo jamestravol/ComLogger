@@ -25,6 +25,8 @@ public class Main {
     public static volatile long fl = 0L;
     public static volatile boolean licensed = false;
     private static String message;
+    private static boolean forceExit = false;
+    public static boolean block = false;
 
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException,
             InstantiationException, IllegalAccessException {
@@ -46,11 +48,8 @@ public class Main {
         try {
             checkAppState();
         } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(splash,
-                    "ComLogger unable to start",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(11);
+            message = "ComLogger unable to start";
+            forceExit = true;
         }
 
         final Application application = Application.INSTANCE;
@@ -68,7 +67,13 @@ public class Main {
         application.getFrame().toFront();
         application.getFrame().requestFocus();
         application.getFrame().setAlwaysOnTop(false);
-        JOptionPane.showMessageDialog(application.getFrame(), message, "Info", JOptionPane.INFORMATION_MESSAGE);
+        if (message != null) {
+            JOptionPane.showMessageDialog(application.getFrame(), message, "Info", block ? JOptionPane.WARNING_MESSAGE :
+                    forceExit ? JOptionPane.ERROR_MESSAGE : JOptionPane.INFORMATION_MESSAGE);
+        }
+        if (forceExit) {
+            SwingUtilities.invokeLater(() -> System.exit(1));
+        }
 
     }
 
@@ -98,7 +103,7 @@ public class Main {
             }
 
             message = "ComLogger has expired!";
-            System.exit(10);
+            block = true;
 
         } else {
             Advapi32Util.registryCreateKey(WinReg.HKEY_CURRENT_USER, ROOT);
