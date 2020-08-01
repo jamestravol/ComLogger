@@ -31,7 +31,7 @@ public final class Application {
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setSize(600, 800);
         frame.setLocationRelativeTo(null);
-        frame.getContentPane().add(new MainPanel());
+        frame.getContentPane().add(MainPanel.INSTANCE);
         frame.pack();
         frame.setResizable(false);
 

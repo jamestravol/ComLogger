@@ -110,6 +110,8 @@ public class TelnetReaderWorker extends SwingWorker<Integer, String> {
 
         System.out.println("Got the new line: " + text);
 
+        connectionPanel.log(text);
+
         final boolean appendDate = Boolean.parseBoolean(Config.INSTANCE.getProperty("app.append.date"));
         final int columnLimit = Integer.parseInt(Config.INSTANCE.getProperty("app.column.limit"));
         final String[] split = text.split(Config.INSTANCE.getProperty("app.separator.regex").trim());
